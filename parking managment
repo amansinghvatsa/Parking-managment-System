@@ -1,0 +1,62 @@
+#include <iostream>
+#include <vector> 
+#include <string>
+class ParkingSystem { private:
+int totalSpaces; std::vector<bool> parkingSpaces;
+public:
+ParkingSystem(int spaces) : totalSpaces(spaces), parkingSpaces(spaces, false) {}
+void displayAvailableSpaces() {
+std::cout << "Available parking spaces: " << countAvailableSpaces() << "/" <<
+totalSpaces << std::endl; }
+int countAvailableSpaces() {
+int count = 0;
+for (bool occupied : parkingSpaces) {
+if (!occupied) { count++;
+} }
+return count; }
+bool parkCar() {
+for (int i = 0; i < totalSpaces; ++i) {
+if (!parkingSpaces[i]) { parkingSpaces[i] = true;
+std::cout << "Car parked in space " << i + 1 << std::endl;
+return true; }
+}
+std::cout << "Sorry, parking is full." << std::endl; return false;
+}
+bool removeCar(int spaceNumber) {
+if (spaceNumber >= 1 && spaceNumber <= totalSpaces) {
+if (parkingSpaces[spaceNumber - 1]) {
+parkingSpaces[spaceNumber - 1] = false;
+std::cout << "Car removed from space " << spaceNumber << std::endl; return true;
+} else {
+std::cout << "No car found in space " << spaceNumber << std::endl;
+}
+} else {
+std::cout << "Invalid space number." << std::endl; }
+return false; }
+};
+int main() {
+int totalSpaces;
+std::cout << "Enter the total number of parking spaces: "; std::cin >> totalSpaces;
+ParkingSystem parking(totalSpaces);
+while (true) {
+std::cout << "\nMenu:\n";
+std::cout << "1. Display available spaces\n"; std::cout << "2. Park a car\n";
+std::cout << "3. Remove a car\n";
+std::cout << "4. Exit\n";
+int choice;
+std::cout << "Enter your choice: ";
+std::cin >> choice;
+switch (choice) { case 1:
+parking.displayAvailableSpaces();
+break; case 2:
+parking.parkCar();
+break; case 3:
+int spaceNumber;
+std::cout << "Enter space number to remove car: "; std::cin >> spaceNumber; parking.removeCar(spaceNumber);
+break;
+case 4:
+std::cout << "Exiting the program.\n"; return 0;
+default:
+std::cout << "Invalid choice. Try again.\n";
+} }
+return 0; }
